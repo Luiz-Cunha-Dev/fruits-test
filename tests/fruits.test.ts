@@ -1,3 +1,4 @@
+import { equal, number, string } from "joi";
 import supertest from "supertest";
 import app from "../src/app";
 
@@ -38,6 +39,15 @@ describe("GET /fruits", () => {
         const result = await api.get("/fruits")
         expect(result.status).toBe(200)
         expect(result.body.length).toBe(2)
+        expect(result.body).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    id: expect.any(Number),
+                    name: expect.any(String),
+                    price: expect.any(Number)
+                })
+            ])
+        )
     });
 
 })
